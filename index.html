@@ -1,0 +1,2223 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sellman Games | Premium Portal</title>
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --neon-blue: #00f2fe;
+      --main-bg: #05070a;
+      --nav-bg: rgba(5, 7, 10, 0.85);
+      --card-bg: #10151d;
+      --text-light: #e6edf3;
+      --text-gray: #8b949e;
+      --border: #21262d;
+      --soft: rgba(0, 242, 254, 0.12);
+      --danger: #ff6b6b;
+      --ok: #7CFFB2;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--main-bg);
+      background-image: radial-gradient(circle at 50% 0%, rgba(0, 242, 254, 0.1) 0%, transparent 50%);
+      color: var(--text-light);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      margin: 0;
+      padding-top: 80px;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; }
+
+    /* ================= HEADER ================= */
+    header {
+      position: fixed;
+      top: 0; left: 0; width: 100%;
+      height: 80px;
+      background: var(--nav-bg);
+      backdrop-filter: blur(15px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(0, 242, 254, 0.1);
+    }
+
+    .left-group, .right-group {
+      display: flex; align-items: center; gap: 14px;
+      min-width: 0;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      min-width: 0;
+    }
+
+    .logo-sg {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--neon-blue);
+      border: 2px solid var(--neon-blue);
+      padding: 5px 10px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
+      text-shadow: 0 0 5px var(--neon-blue);
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 1px;
+      flex: 0 0 auto;
+    }
+
+    .brand-name {
+      color: white;
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-links a {
+      color: var(--text-light);
+      text-decoration: none;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: 0.2s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover {
+      color: var(--neon-blue);
+      background: rgba(0, 242, 254, 0.06);
+    }
+    .nav-links a.active {
+      color: var(--neon-blue);
+      background: rgba(0,242,254,0.10);
+      border: 1px solid rgba(0,242,254,0.22);
+    }
+
+    .search-bar {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 999px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      width: min(420px, 35vw);
+      transition: 0.2s;
+      gap: 10px;
+    }
+    .search-bar:focus-within {
+      border-color: rgba(0, 242, 254, 0.55);
+      box-shadow: 0 0 0 3px rgba(0, 242, 254, 0.08);
+    }
+    .search-bar input {
+      background: transparent;
+      border: none;
+      color: white;
+      outline: none;
+      width: 100%;
+      font-size: 0.95rem;
+    }
+
+    .icon-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      border: 1px solid #30363d;
+      background: rgba(255,255,255,0.04);
+      color: var(--text-light);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .icon-btn:hover {
+      border-color: rgba(0, 242, 254, 0.35);
+      box-shadow: 0 0 14px rgba(0,242,254,0.10);
+      transform: translateY(-1px);
+    }
+
+    .hamburger { display: none; }
+    .mobile-search-btn { display: none; }
+
+    .auth-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+    }
+
+    /* Profile pill shown after login */
+    .profile-pill {
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      padding: 8px 10px;
+      border: 1px solid rgba(0,242,254,0.25);
+      background: rgba(0,242,254,0.06);
+      border-radius: 999px;
+      cursor:pointer;
+      transition: 0.2s;
+      max-width: 260px;
+    }
+    .profile-pill:hover {
+      border-color: rgba(0,242,254,0.55);
+      box-shadow: 0 0 18px rgba(0,242,254,0.12);
+    }
+    .profile-pill img {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 2px solid var(--neon-blue);
+      object-fit: cover;
+      flex: 0 0 auto;
+    }
+    .profile-pill .name {
+      font-weight: 800;
+      font-size: 0.95rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 150px;
+    }
+
+    .dropdown {
+      position: absolute;
+      top: 56px;
+      right: 0;
+      width: 260px;
+      background: rgba(16,21,29,0.98);
+      border: 1px solid rgba(0,242,254,0.18);
+      border-radius: 14px;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.55);
+      overflow: hidden;
+      display: none;
+      z-index: 2000;
+    }
+    .dropdown.open { display: block; }
+    .dropdown .head {
+      padding: 14px 14px 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .dropdown .head .email {
+      color: var(--text-gray);
+      font-size: 0.85rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .dropdown a, .dropdown button {
+      width: 100%;
+      padding: 12px 14px;
+      background: transparent;
+      border: none;
+      color: var(--text-light);
+      text-align: left;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: 0.15s;
+      text-decoration: none;
+    }
+    .dropdown a:hover, .dropdown button:hover {
+      background: rgba(0,242,254,0.08);
+      color: var(--neon-blue);
+    }
+    .dropdown .danger:hover { color: var(--danger); }
+    .dropdown .admin-badge {
+      margin-left: auto;
+      font-size: .75rem;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(124,255,178,0.22);
+      background: rgba(124,255,178,0.10);
+      color: var(--ok);
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: .3px;
+    }
+
+    /* Mobile nav drawer */
+    .drawer {
+      position: fixed;
+      inset: 80px 0 0 0;
+      background: rgba(5,7,10,0.96);
+      backdrop-filter: blur(10px);
+      transform: translateY(-10px);
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.25s ease;
+      z-index: 999;
+      border-top: 1px solid rgba(0,242,254,0.10);
+    }
+    .drawer.open {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .drawer .inner {
+      width: 92%;
+      max-width: 520px;
+      margin: 16px auto;
+      background: rgba(16,21,29,0.60);
+      border: 1px solid rgba(0,242,254,0.14);
+      border-radius: 18px;
+      padding: 14px;
+    }
+    .drawer .inner a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 12px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-weight: 800;
+      color: var(--text-light);
+      border: 1px solid rgba(255,255,255,0.05);
+      background: rgba(255,255,255,0.02);
+      margin-bottom: 10px;
+      transition: 0.15s;
+    }
+    .drawer .inner a:hover {
+      border-color: rgba(0,242,254,0.22);
+      background: rgba(0,242,254,0.06);
+      color: var(--neon-blue);
+    }
+
+    /* Mobile search panel */
+    .mobile-search-panel {
+      position: fixed;
+      top: 80px;
+      left: 0; right: 0;
+      padding: 14px 14px 16px;
+      background: rgba(5,7,10,0.96);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0,242,254,0.10);
+      z-index: 1001;
+      display: none;
+    }
+    .mobile-search-panel.open { display: block; }
+    .mobile-search-panel .search-bar { width: 100%; }
+
+    /* ================= HERO ================= */
+    .hero-banner {
+      width: 92%;
+      max-width: 1400px;
+      margin: 26px auto 10px;
+      height: 460px;
+      border-radius: 26px;
+      background:
+        linear-gradient(to right, rgba(5,7,10,0.92) 18%, rgba(5,7,10,0.25) 45%, transparent),
+        url('https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=1600&q=80') center/cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 52px;
+      position: relative;
+      box-shadow: 0 18px 55px rgba(0,0,0,0.55);
+      border: 1px solid rgba(0, 242, 254, 0.22);
+      overflow: hidden;
+    }
+
+    .featured-pill {
+      background: var(--neon-blue);
+      color: black;
+      padding: 6px 14px;
+      border-radius: 999px;
+      width: fit-content;
+      font-weight: 900;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .hero-banner h1 {
+      font-size: clamp(2.2rem, 4vw, 4rem);
+      margin: 0;
+      color: white;
+      text-transform: uppercase;
+      text-shadow: 0 0 20px rgba(0, 242, 254, 0.55);
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 1px;
+    }
+
+    .hero-banner p {
+      font-size: 1.08rem;
+      color: #d1d5db;
+      max-width: 560px;
+      line-height: 1.65;
+      margin: 12px 0 0;
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 14px 0 10px;
+    }
+    .hero-badges span{
+      border: 1px solid rgba(0,242,254,.25);
+      background: rgba(0,242,254,.08);
+      padding: 7px 11px;
+      border-radius: 999px;
+      font-size: .9rem;
+      color: var(--text-light);
+      font-weight: 700;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .btn-primary {
+      background: var(--neon-blue);
+      color: black;
+      padding: 14px 24px;
+      border-radius: 999px;
+      font-size: 1.05rem;
+      font-weight: 900;
+      border: none;
+      cursor: pointer;
+      width: fit-content;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: 0.2px;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 0 25px rgba(0,242,254,0.45);
+      background: #ffffff;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.04);
+      color: var(--text-light);
+      padding: 14px 20px;
+      border-radius: 999px;
+      font-size: 1.05rem;
+      font-weight: 900;
+      border: 1px solid rgba(0,242,254,0.22);
+      cursor: pointer;
+      transition: 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-secondary:hover {
+      background: rgba(0,242,254,0.08);
+      border-color: rgba(0,242,254,0.45);
+      color: var(--neon-blue);
+      transform: translateY(-2px);
+      box-shadow: 0 0 18px rgba(0,242,254,0.12);
+    }
+
+    /* ================= CATEGORIES ================= */
+    .categories {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 26px 0 26px;
+      padding: 0 10px;
+    }
+    .cat-pill {
+      background: var(--card-bg);
+      padding: 10px 18px;
+      border-radius: 999px;
+      color: var(--text-gray);
+      text-decoration: none;
+      border: 1px solid #30363d;
+      transition: 0.2s;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .cat-pill:hover, .cat-pill.active {
+      background: rgba(0, 242, 254, 0.1);
+      color: var(--neon-blue);
+      border-color: rgba(0,242,254,0.55);
+      box-shadow: 0 0 18px rgba(0,242,254,0.10);
+    }
+
+    /* ================= LAYOUT ================= */
+    .content-wrapper {
+      display: flex;
+      width: 92%;
+      max-width: 1400px;
+      margin: 0 auto;
+      gap: 24px;
+      align-items: flex-start;
+      padding-bottom: 42px;
+    }
+
+    /* ================= GAME GRID & CARDS ================= */
+    .game-grid {
+      flex: 3;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 22px;
+    }
+
+    .game-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid var(--border);
+      transition: all 0.25s ease;
+      cursor: pointer;
+      display: block;
+      text-decoration: none;
+    }
+
+    .game-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(0,242,254,0.6);
+      box-shadow: 0 16px 32px rgba(0, 242, 254, 0.14);
+    }
+
+    .game-thumb {
+      height: 155px;
+      background: #1a1f26;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      position: relative;
+      isolation: isolate;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .game-thumb::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(to top, rgba(0,0,0,.55), transparent 55%);
+      pointer-events:none;
+      z-index: 0;
+    }
+
+    .tag{
+      position:absolute; top:10px; left:10px;
+      background:rgba(0,242,254,.15);
+      border:1px solid rgba(0,242,254,.35);
+      color:var(--neon-blue);
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:.75rem;
+      font-weight:900;
+      z-index: 2;
+      letter-spacing: 0.6px;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    /* Hover Play Overlay */
+    .play-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: 0.2s;
+      z-index: 1;
+    }
+    .game-card:hover .play-overlay { opacity: 1; }
+    .play-overlay i {
+      font-size: 3rem;
+      color: var(--neon-blue);
+      text-shadow: 0 0 15px var(--neon-blue);
+    }
+
+    .game-info {
+      padding: 14px 14px 12px;
+      color: white;
+    }
+    .game-info h3 {
+      margin: 0 0 7px 0;
+      font-size: 1.12rem;
+      letter-spacing: 0.2px;
+    }
+    .game-stats {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-gray);
+      font-size: 0.86rem;
+      gap: 10px;
+    }
+    .left-stats { display:flex; align-items:center; gap: 10px; }
+    .stat {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      white-space: nowrap;
+    }
+
+    .like-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      cursor: pointer;
+      user-select: none;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      transition: 0.15s;
+      white-space: nowrap;
+    }
+    .like-btn:hover {
+      border-color: rgba(0,242,254,0.28);
+      background: rgba(0,242,254,0.06);
+    }
+    .like-btn i { transition: 0.12s; }
+    .like-btn.liked i { color: #ff4757; }
+    .like-btn.liked { border-color: rgba(255,71,87,0.35); background: rgba(255,71,87,0.06); }
+
+    .game-desc {
+      margin-top: 8px;
+      color: var(--text-gray);
+      font-size: .9rem;
+      line-height: 1.4;
+      min-height: 38px;
+    }
+
+    /* ================= SIDEBAR ================= */
+    .sidebar {
+      flex: 1;
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid var(--border);
+      height: fit-content;
+      position: sticky;
+      top: 96px;
+    }
+
+    .sidebar h2 {
+      margin: 0 0 10px;
+      color: var(--neon-blue);
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding-bottom: 12px;
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 0.4px;
+    }
+
+    .player-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 6px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+    }
+    .player-row:last-child { border-bottom: none; }
+
+    .player-row:first-of-type{
+      background: rgba(0,242,254,.08);
+      box-shadow: 0 0 18px rgba(0,242,254,0.12);
+      border: 1px solid rgba(0,242,254,0.16);
+      margin-top: 10px;
+    }
+
+    .p-info { display: flex; align-items: center; gap: 10px; }
+    .avatar {
+      width: 32px; height: 32px;
+      background: var(--neon-blue);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: black; font-weight: 900;
+      font-family: 'Orbitron', sans-serif;
+    }
+    .score { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--neon-blue); font-weight: 900; }
+
+    /* ================= FOOTER ================= */
+    footer {
+      width: 100%;
+      border-top: 1px solid rgba(0,242,254,0.10);
+      background: rgba(16,21,29,0.60);
+      padding: 28px 0;
+      margin-top: 28px;
+    }
+    .footer-inner {
+      width: 92%;
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-links {
+      display:flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      color: var(--text-gray);
+      font-weight: 700;
+    }
+    .footer-links a {
+      text-decoration: none;
+      color: var(--text-gray);
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.05);
+      background: rgba(255,255,255,0.02);
+      transition: 0.15s;
+    }
+    .footer-links a:hover {
+      color: var(--neon-blue);
+      border-color: rgba(0,242,254,0.22);
+      background: rgba(0,242,254,0.06);
+    }
+    .copyright {
+      color: var(--text-gray);
+      font-weight: 700;
+    }
+
+    /* ================= MODALS (Upload + Profile + Lang) ================= */
+    .overlay{
+      position:fixed; inset:0;
+      background:rgba(0,0,0,0.65);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:5000;
+      padding:18px;
+    }
+    .overlay.open{display:flex}
+    .modal{
+      width:min(980px, 100%);
+      background:rgba(16,21,29,0.98);
+      border:1px solid rgba(0,242,254,0.18);
+      border-radius:18px;
+      box-shadow:0 30px 90px rgba(0,0,0,0.65);
+      overflow:hidden;
+    }
+    .modal-head{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 16px;
+      border-bottom:1px solid rgba(255,255,255,0.06);
+    }
+    .modal-title{
+      display:flex; align-items:center; gap:10px;
+      font-family:'Orbitron',sans-serif;
+      font-weight:900;
+      letter-spacing:.4px;
+      color:var(--neon-blue);
+    }
+    .modal-body{padding:16px;}
+    .row{
+      display:grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap:14px;
+    }
+    @media (max-width:820px){ .row{grid-template-columns:1fr} }
+
+    .field{display:flex; flex-direction:column; gap:8px; margin-bottom:12px;}
+    label{font-weight:900; color:rgba(230,237,243,0.92)}
+    input[type="text"], textarea{
+      width:100%;
+      background:#0f141b;
+      border:1px solid rgba(255,255,255,0.10);
+      border-radius:14px;
+      padding:12px 12px;
+      color:var(--text-light);
+      outline:none;
+      font-size:0.98rem;
+      transition:.15s;
+    }
+    textarea{min-height:110px; resize:vertical}
+    input[type="text"]:focus, textarea:focus{
+      border-color:rgba(0,242,254,0.55);
+      box-shadow:0 0 0 3px rgba(0,242,254,0.08);
+    }
+    .drop{
+      border:1px dashed rgba(0,242,254,0.35);
+      background:rgba(0,242,254,0.06);
+      border-radius:16px;
+      padding:16px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .drop strong{font-family:'Orbitron',sans-serif; letter-spacing:.3px}
+    .drop .hint{color:var(--text-gray); font-weight:700; line-height:1.5}
+    .file-line{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,0.08);
+      background:rgba(255,255,255,0.03);
+      color:rgba(230,237,243,0.92);
+      font-weight:800;
+    }
+    .file-line .name{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+    .progress{
+      height:10px; background:rgba(255,255,255,0.06);
+      border-radius:999px; overflow:hidden;
+      border:1px solid rgba(255,255,255,0.06);
+      margin-top:8px;
+    }
+    .bar{
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg, rgba(0,242,254,0.9), rgba(124,255,178,0.9));
+      transition:width .15s;
+    }
+    .status{margin-top:10px; color:var(--text-gray); font-weight:800;}
+    .footer-actions{
+      display:flex; align-items:center; justify-content:flex-end;
+      gap:10px;
+      padding:14px 16px;
+      border-top:1px solid rgba(255,255,255,0.06);
+    }
+
+    /* Profile preview block */
+    .profile-preview{
+      border:1px solid rgba(255,255,255,0.08);
+      background:rgba(255,255,255,0.03);
+      border-radius:16px;
+      overflow:hidden;
+    }
+    .profile-banner{
+      height:120px;
+      background: linear-gradient(90deg, rgba(0,242,254,0.20), rgba(0,0,0,0.0)), #111;
+      background-size: cover;
+      background-position: center;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .profile-preview-inner{
+      padding:12px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .profile-preview-inner img{
+      width:44px; height:44px; border-radius:50%;
+      border:2px solid var(--neon-blue);
+      object-fit:cover;
+    }
+    .tiny{color:var(--text-gray); font-weight:700; font-size:.9rem}
+
+    /* ================= RESPONSIVE ================= */
+    @media (max-width: 980px) {
+      .sidebar { display: none; }
+      .content-wrapper { flex-direction: column; }
+      .game-grid { width: 100%; }
+      .hero-banner { height: 440px; padding: 40px; }
+    }
+
+    @media (max-width: 860px) {
+      header { padding: 0 14px; }
+      .nav-links { display: none; }
+      .hamburger { display: inline-flex; }
+      .search-bar { display: none; }
+      .mobile-search-btn { display: inline-flex; }
+      .brand-name { font-size: 1.05rem; }
+      .logo-sg { font-size: 1.55rem; }
+    }
+
+    @media (max-width: 520px) {
+      .hero-banner { padding: 26px; height: 430px; }
+      .profile-pill { max-width: 190px; }
+      .profile-pill .name { max-width: 92px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="left-group">
+      <button class="icon-btn hamburger" id="hamburgerBtn" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <a href="#" class="logo-area" aria-label="Home" id="homeLink">
+        <div class="logo-sg">SG</div>
+        <h2 class="brand-name">Sellman</h2>
+      </a>
+
+      <nav class="nav-links" aria-label="Top navigation">
+        <a href="#" id="navGames"><i class="fas fa-gamepad"></i> <span data-i18n="nav_games">Games</span></a>
+        <a href="#" id="navTop"><i class="fas fa-fire"></i> <span data-i18n="nav_top">Top</span></a>
+        <a href="#" id="navNew"><i class="fas fa-star"></i> <span data-i18n="nav_new">New</span></a>
+        <a href="#" id="navCats"><i class="fas fa-list"></i> <span data-i18n="nav_categories">Categories</span></a>
+      </nav>
+    </div>
+
+    <div class="right-group">
+      <div class="search-bar" id="desktopSearch">
+        <i class="fas fa-search" style="color: var(--text-gray);"></i>
+        <input id="searchInput" type="text" placeholder="Search games..." data-i18n-ph="search_placeholder" />
+      </div>
+
+      <button class="icon-btn mobile-search-btn" id="mobileSearchBtn" aria-label="Search">
+        <i class="fas fa-search"></i>
+      </button>
+
+      <!-- Language -->
+      <button class="icon-btn" id="langBtn" title="Language">
+        <i class="fas fa-globe"></i>
+      </button>
+
+      <div class="auth-container" id="authContainer">
+        <button class="icon-btn" id="loginBtn" title="Sign in with Google">
+          <i class="fa-brands fa-google"></i>
+        </button>
+
+        <div class="dropdown" id="profileDropdown" aria-label="Profile menu">
+          <div class="head">
+            <div style="font-weight:900; font-family:'Orbitron',sans-serif; letter-spacing:0.4px;" data-i18n="account">Account</div>
+            <div class="email" id="dropEmail">-</div>
+          </div>
+
+          <a href="#" id="menuProfileEdit"><i class="fas fa-pen"></i> <span data-i18n="edit_profile">Edit profile</span></a>
+
+          <a href="#" id="menuUpload" style="display:none;">
+            <i class="fas fa-upload"></i>
+            <span data-i18n="upload_game">Upload Game</span>
+            <span class="admin-badge">ADMIN</span>
+          </a>
+
+          <button class="danger" id="menuLogout"><i class="fas fa-right-from-bracket"></i> <span data-i18n="logout">Logout</span></button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile drawer -->
+  <div class="drawer" id="drawer">
+    <div class="inner">
+      <a href="#" id="mNavGames"><i class="fas fa-gamepad"></i> <span data-i18n="nav_games">Games</span></a>
+      <a href="#" id="mNavTop"><i class="fas fa-fire"></i> <span data-i18n="nav_top">Top</span></a>
+      <a href="#" id="mNavNew"><i class="fas fa-star"></i> <span data-i18n="nav_new">New</span></a>
+      <a href="#" id="mNavCats"><i class="fas fa-list"></i> <span data-i18n="nav_categories">Categories</span></a>
+    </div>
+  </div>
+
+  <!-- Mobile search panel -->
+  <div class="mobile-search-panel" id="mobileSearchPanel">
+    <div class="search-bar">
+      <i class="fas fa-search" style="color: var(--text-gray);"></i>
+      <input id="mobileSearchInput" type="text" placeholder="Search games..." data-i18n-ph="search_placeholder" />
+    </div>
+  </div>
+
+  <section class="hero-banner" id="topSection">
+    <span class="featured-pill" data-i18n="featured">FEATURED</span>
+    <h1 id="featuredTitle">Random Runner</h1>
+
+    <div class="hero-badges">
+      <span>⚡ <span data-i18n="badge_fast">Fast</span></span>
+      <span>🔥 <span data-i18n="badge_trending">Trending</span></span>
+      <span>🎯 <span data-i18n="badge_skill">Skill</span></span>
+      <span>🆕 <span data-i18n="badge_update">Weekly Update</span></span>
+    </div>
+
+    <p data-i18n="hero_desc">გაურბინე დაბრკოლებებს, რომლებიც ყოველ ჯერზე სხვადასხვაა. გამოსცადე შენი რეაქცია Sellman Games-ის მთავარ ჰიტში!</p>
+
+    <div class="hero-actions">
+      <button class="btn-primary" id="playFeaturedBtn"><i class="fas fa-play"></i> <span data-i18n="play_now">Play Now</span></button>
+      <button class="btn-secondary" id="detailsFeaturedBtn"><i class="fas fa-circle-info"></i> <span data-i18n="view_details">View Details</span></button>
+    </div>
+  </section>
+
+  <div class="categories" id="categories">
+    <a href="#" class="cat-pill active" data-cat="All"><i class="fas fa-layer-group"></i> <span data-i18n="cat_all">All</span></a>
+    <a href="#" class="cat-pill" data-cat="Action"><i class="fas fa-bolt"></i> <span data-i18n="cat_action">Action</span></a>
+    <a href="#" class="cat-pill" data-cat="Puzzle"><i class="fas fa-puzzle-piece"></i> <span data-i18n="cat_puzzle">Puzzle</span></a>
+    <a href="#" class="cat-pill" data-cat="Horror"><i class="fas fa-ghost"></i> <span data-i18n="cat_horror">Horror</span></a>
+    <a href="#" class="cat-pill" data-cat="Multiplayer"><i class="fas fa-users"></i> <span data-i18n="cat_multiplayer">Multiplayer</span></a>
+    <a href="#" class="cat-pill" data-cat="Idle"><i class="fas fa-hourglass-half"></i> <span data-i18n="cat_idle">Idle</span></a>
+  </div>
+
+  <div class="content-wrapper" id="gamesSection">
+    <div class="game-grid" id="gameGrid">
+      <!-- Firestore games render here -->
+    </div>
+
+    <aside class="sidebar">
+      <h2><i class="fas fa-trophy"></i> <span data-i18n="top_players">Top Players (Weekly)</span></h2>
+
+      <div class="player-row">
+        <div class="p-info">
+          <span style="color: gold; font-weight: 900;">#1</span>
+          <div class="avatar">G</div>
+          <span style="font-weight:800;">GamerPro99</span>
+        </div>
+        <span class="score">15,420</span>
+      </div>
+
+      <div class="player-row">
+        <div class="p-info">
+          <span style="color: silver; font-weight: 900;">#2</span>
+          <div class="avatar">A</div>
+          <span style="font-weight:800;">Alex_Dev</span>
+        </div>
+        <span class="score">14,100</span>
+      </div>
+
+      <div class="player-row">
+        <div class="p-info">
+          <span style="color: #cd7f32; font-weight: 900;">#3</span>
+          <div class="avatar">N</div>
+          <span style="font-weight:800;">NinjaTbilisi</span>
+        </div>
+        <span class="score">12,850</span>
+      </div>
+    </aside>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="copyright">© <span id="year"></span> Sellman Games — <span data-i18n="rights">All rights reserved.</span></div>
+      <div class="footer-links">
+        <a href="#"><i class="fas fa-circle-info"></i> <span data-i18n="about">About</span></a>
+        <a href="#"><i class="fas fa-envelope"></i> <span data-i18n="contact">Contact</span></a>
+        <a href="#"><i class="fas fa-shield"></i> <span data-i18n="privacy">Privacy</span></a>
+        <a href="#"><i class="fas fa-file-contract"></i> <span data-i18n="terms">Terms</span></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================== Upload Modal ===================== -->
+  <div class="overlay" id="overlayUpload">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-head">
+        <div class="modal-title"><i class="fas fa-upload"></i> <span data-i18n="upload_game">Upload Game</span> (Admin)</div>
+        <button class="icon-btn" id="closeUpload" aria-label="Close"><i class="fas fa-xmark"></i></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="row">
+          <div>
+            <div class="field">
+              <label for="gameTitle" data-i18n="game_title">Game Title</label>
+              <input id="gameTitle" type="text" placeholder="მაგ: Random Runner" maxlength="60" />
+            </div>
+
+            <div class="field">
+              <label for="gameDesc" data-i18n="description">Description</label>
+              <textarea id="gameDesc" placeholder="მოკლე აღწერა თამაშზე..." maxlength="500"></textarea>
+            </div>
+
+            <div class="field">
+              <label data-i18n="category">Category</label>
+              <input id="gameCat" type="text" placeholder="Action / Puzzle / Horror / Multiplayer / Idle" maxlength="20" />
+              <div class="tiny" data-i18n="category_hint">თუ ცარიელია, ჩაიწერება All.</div>
+            </div>
+
+            <div class="field">
+              <label data-i18n="thumb_image">Background / Thumbnail Image</label>
+              <div class="drop" id="imgDrop">
+                <strong><i class="fas fa-image"></i> <span data-i18n="drag_image">Drag & Drop image აქ</span></strong>
+                <div class="hint" data-i18n="image_hint">ან დააჭირე Choose. რეკომენდაცია: 1200x600.</div>
+                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                  <input id="imgPick" type="file" accept="image/*" hidden />
+                  <button class="icon-btn" id="imgChoose" aria-label="Choose image"><i class="fas fa-folder-open"></i></button>
+                  <button class="icon-btn" id="imgClear" aria-label="Clear image" disabled><i class="fas fa-trash"></i></button>
+                </div>
+                <div class="file-line" id="imgLine" style="display:none;">
+                  <span class="name" id="imgName">-</span>
+                  <span style="color:var(--text-gray); font-weight:900;" id="imgSize">-</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="field">
+              <label data-i18n="game_file">Game File (single .html)</label>
+              <div class="drop" id="gameDrop">
+                <strong><i class="fas fa-file-code"></i> <span data-i18n="drag_game">Drag & Drop game.html აქ</span></strong>
+                <div class="hint" data-i18n="game_hint">ატვირთე ერთი .html (index.html). ბევრი ფაილისთვის საჭირო იქნება ZIP.</div>
+                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                  <input id="gamePick" type="file" accept=".html,text/html" hidden />
+                  <button class="icon-btn" id="gameChoose" aria-label="Choose game file"><i class="fas fa-folder-open"></i></button>
+                  <button class="icon-btn" id="gameClear" aria-label="Clear game file" disabled><i class="fas fa-trash"></i></button>
+                </div>
+                <div class="file-line" id="gameLine" style="display:none;">
+                  <span class="name" id="gameName">-</span>
+                  <span style="color:var(--text-gray); font-weight:900;" id="gameSize">-</span>
+                </div>
+
+                <div class="progress"><div class="bar" id="barUpload"></div></div>
+                <div class="status" id="statusUpload" data-i18n="status_ready">Ready.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:10px; color:var(--text-gray); font-weight:800;">
+          <i class="fas fa-lock" style="color:var(--neon-blue)"></i>
+          <span data-i18n="admin_only">Upload უფლება აქვს მხოლოდ Admin-ს.</span>
+        </div>
+      </div>
+
+      <div class="footer-actions">
+        <button class="btn-secondary" id="cancelUpload"><i class="fas fa-ban"></i> <span data-i18n="cancel">Cancel</span></button>
+        <button class="btn-primary" id="submitUpload"><i class="fas fa-cloud-arrow-up"></i> <span data-i18n="upload">Upload</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== Profile Modal ===================== -->
+  <div class="overlay" id="overlayProfile">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-head">
+        <div class="modal-title"><i class="fas fa-user-pen"></i> <span data-i18n="edit_profile">Edit profile</span></div>
+        <button class="icon-btn" id="closeProfile" aria-label="Close"><i class="fas fa-xmark"></i></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="row">
+          <div>
+            <div class="profile-preview">
+              <div class="profile-banner" id="profileBannerPreview"></div>
+              <div class="profile-preview-inner">
+                <img id="profileAvatarPreview" alt="avatar" />
+                <div>
+                  <div style="font-weight:900" id="profileNickPreview">Player</div>
+                  <div class="tiny" id="profileEmailPreview">-</div>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top:12px; color:var(--text-gray); font-weight:800;">
+              <i class="fas fa-circle-info" style="color:var(--neon-blue)"></i>
+              <span data-i18n="profile_info">Nickname და Banner ყველამ შეუძლია შეცვალოს საკუთარ პროფილზე.</span>
+            </div>
+          </div>
+
+          <div>
+            <div class="field">
+              <label data-i18n="nickname">Nickname</label>
+              <input id="nickInput" type="text" maxlength="24" placeholder="Your nickname" />
+            </div>
+
+            <div class="field">
+              <label data-i18n="profile_banner">Profile Banner</label>
+              <div class="drop" id="bannerDrop">
+                <strong><i class="fas fa-panorama"></i> <span data-i18n="drag_banner">Drag & Drop banner აქ</span></strong>
+                <div class="hint" data-i18n="banner_hint">სურათი JPG/PNG/WebP. რეკომენდაცია: 1600x400.</div>
+                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                  <input id="bannerPick" type="file" accept="image/*" hidden />
+                  <button class="icon-btn" id="bannerChoose" aria-label="Choose banner"><i class="fas fa-folder-open"></i></button>
+                  <button class="icon-btn" id="bannerClear" aria-label="Clear banner" disabled><i class="fas fa-trash"></i></button>
+                </div>
+                <div class="file-line" id="bannerLine" style="display:none;">
+                  <span class="name" id="bannerName">-</span>
+                  <span style="color:var(--text-gray); font-weight:900;" id="bannerSize">-</span>
+                </div>
+
+                <div class="progress"><div class="bar" id="barProfile"></div></div>
+                <div class="status" id="statusProfile" data-i18n="status_ready">Ready.</div>
+              </div>
+            </div>
+
+            <div class="footer-actions" style="padding:0; border-top:none;">
+              <button class="btn-secondary" id="saveProfileBtn"><i class="fas fa-floppy-disk"></i> <span data-i18n="save">Save</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-actions">
+        <button class="btn-secondary" id="closeProfile2"><i class="fas fa-check"></i> <span data-i18n="done">Done</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== Language Picker ===================== -->
+  <div class="overlay" id="overlayLang">
+    <div class="modal" style="width:min(520px,100%);">
+      <div class="modal-head">
+        <div class="modal-title"><i class="fas fa-globe"></i> <span data-i18n="language">Language</span></div>
+        <button class="icon-btn" id="closeLang" aria-label="Close"><i class="fas fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <div style="display:grid; gap:10px;">
+          <button class="btn-secondary" data-lang="ka">🇬🇪 ქართული</button>
+          <button class="btn-secondary" data-lang="en">🇬🇧 English</button>
+          <button class="btn-secondary" data-lang="ru">🇷🇺 Русский</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== App Script ===================== -->
+  <script type="module">
+    /******************************************************************
+     *  1) ჩაანაცვლე firebaseConfig (Firebase Console -> Web app config)
+     ******************************************************************/
+    const ADMIN_EMAIL = "lukazakradze9@gmail.com";
+
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut }
+      from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+    import {
+      getFirestore, collection, addDoc, setDoc, doc, getDoc, serverTimestamp,
+      query, orderBy, onSnapshot
+    } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+    import { getStorage, ref, uploadBytesResumable, getDownloadURL }
+      from "https://www.gstatic.com/firebasejs/10.12.4/firebase-storage.js";
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+    const provider = new GoogleAuthProvider();
+
+    const $ = (s) => document.querySelector(s);
+    const $all = (s) => Array.from(document.querySelectorAll(s));
+    const esc = (str) => String(str ?? "")
+      .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+
+    // ------------------ i18n ------------------
+    // მთავარი ფიქსი აქაა:
+    // 1) ყველა UI ტექსტი გადაყვანილია t()-ზე
+    // 2) დინამიურ HTML-ს (renderGames, empty-state, status ტექსტები) უკვე t()-ით წერს
+    const I18N = {
+      ka: {
+        nav_games: "Games", nav_top:"Top", nav_new:"New", nav_categories:"Categories",
+        search_placeholder:"Search games...",
+        featured:"FEATURED",
+        badge_fast:"Fast", badge_trending:"Trending", badge_skill:"Skill", badge_update:"Weekly Update",
+        hero_desc:"გაურბინე დაბრკოლებებს, რომლებიც ყოველ ჯერზე სხვადასხვაა. გამოსცადე შენი რეაქცია Sellman Games-ის მთავარ ჰიტში!",
+        play_now:"Play Now", view_details:"View Details",
+        cat_all:"All", cat_action:"Action", cat_puzzle:"Puzzle", cat_horror:"Horror", cat_multiplayer:"Multiplayer", cat_idle:"Idle",
+        top_players:"Top Players (Weekly)",
+        rights:"All rights reserved.",
+        about:"About", contact:"Contact", privacy:"Privacy", terms:"Terms",
+        account:"Account", edit_profile:"Edit profile", upload_game:"Upload Game", logout:"Logout",
+        game_title:"Game Title", description:"Description", category:"Category", category_hint:"თუ ცარიელია, ჩაიწერება All.",
+        thumb_image:"Background / Thumbnail Image",
+        drag_image:"Drag & Drop image აქ",
+        image_hint:"ან დააჭირე Choose. რეკომენდაცია: 1200x600.",
+        game_file:"Game File (single .html)",
+        drag_game:"Drag & Drop game.html აქ",
+        game_hint:"ატვირთე ერთი .html (index.html). ბევრი ფაილისთვის საჭირო იქნება ZIP.",
+        admin_only:"Upload უფლება აქვს მხოლოდ Admin-ს.",
+        cancel:"Cancel", upload:"Upload",
+        profile_info:"Nickname და Banner ყველამ შეუძლია შეცვალოს საკუთარ პროფილზე.",
+        nickname:"Nickname",
+        profile_banner:"Profile Banner",
+        drag_banner:"Drag & Drop banner აქ",
+        banner_hint:"სურათი JPG/PNG/WebP. რეკომენდაცია: 1600x400.",
+        save:"Save",
+        done:"Done",
+        language:"Language",
+
+        // messages / statuses
+        msg_login_needed:"ჯერ შედი Google-ით.",
+        msg_admin_only:"Upload უფლება მხოლოდ Admin-ს აქვს.",
+        msg_saved:"✅ შენახულია!",
+        msg_upload_ok:"✅ Uploaded!",
+        msg_error:"შეცდომა. სცადე თავიდან.",
+        status_ready:"Ready.",
+        status_uploading_image:"Uploading image...",
+        status_uploading_game:"Uploading game...",
+        status_saving:"Saving...",
+        status_uploading_banner:"Uploading banner...",
+        status_writing_profile:"Writing profile...",
+
+        // validations
+        val_title_required:"Title required.",
+        val_desc_required:"Description required.",
+        val_pick_image:"Pick image.",
+        val_pick_game:"Pick game HTML.",
+        val_image_only:"Image only.",
+        val_html_only:"HTML only (.html).",
+
+        // games empty state
+        no_games_title:"No games yet",
+        no_games_hint:"Admin-ით შედი და დაამატე პირველი თამაში.",
+
+        // card description (შენ რაც გინდოდა)
+        in_charts:"Sellman Games-ის მთავარ ჩარტებში",
+
+        sort_top:"Top sorting ჩართულია",
+        sort_new:"New sorting ჩართულია",
+      },
+      en: {
+        nav_games: "Games", nav_top:"Top", nav_new:"New", nav_categories:"Categories",
+        search_placeholder:"Search games...",
+        featured:"FEATURED",
+        badge_fast:"Fast", badge_trending:"Trending", badge_skill:"Skill", badge_update:"Weekly Update",
+        hero_desc:"Dodge obstacles that change every run. Test your reflexes in Sellman Games’ main hit!",
+        play_now:"Play Now", view_details:"View Details",
+        cat_all:"All", cat_action:"Action", cat_puzzle:"Puzzle", cat_horror:"Horror", cat_multiplayer:"Multiplayer", cat_idle:"Idle",
+        top_players:"Top Players (Weekly)",
+        rights:"All rights reserved.",
+        about:"About", contact:"Contact", privacy:"Privacy", terms:"Terms",
+        account:"Account", edit_profile:"Edit profile", upload_game:"Upload Game", logout:"Logout",
+        game_title:"Game Title", description:"Description", category:"Category", category_hint:"If empty, it will be saved as All.",
+        thumb_image:"Background / Thumbnail Image",
+        drag_image:"Drag & Drop image here",
+        image_hint:"Or click Choose. Recommended: 1200x600.",
+        game_file:"Game File (single .html)",
+        drag_game:"Drag & Drop game.html here",
+        game_hint:"Upload a single .html (index.html). For many files you’ll need ZIP.",
+        admin_only:"Upload is available only for Admin.",
+        cancel:"Cancel", upload:"Upload",
+        profile_info:"Everyone can edit their own nickname and banner.",
+        nickname:"Nickname",
+        profile_banner:"Profile Banner",
+        drag_banner:"Drag & Drop banner here",
+        banner_hint:"Image JPG/PNG/WebP. Recommended: 1600x400.",
+        save:"Save",
+        done:"Done",
+        language:"Language",
+
+        msg_login_needed:"Please sign in with Google first.",
+        msg_admin_only:"Only Admin can upload games.",
+        msg_saved:"✅ Saved!",
+        msg_upload_ok:"✅ Uploaded!",
+        msg_error:"Error. Please try again.",
+        status_ready:"Ready.",
+        status_uploading_image:"Uploading image...",
+        status_uploading_game:"Uploading game...",
+        status_saving:"Saving...",
+        status_uploading_banner:"Uploading banner...",
+        status_writing_profile:"Writing profile...",
+
+        val_title_required:"Title required.",
+        val_desc_required:"Description required.",
+        val_pick_image:"Pick an image.",
+        val_pick_game:"Pick game HTML file.",
+        val_image_only:"Image only.",
+        val_html_only:"HTML only (.html).",
+
+        no_games_title:"No games yet",
+        no_games_hint:"Sign in as Admin and upload your first game.",
+
+        in_charts:"In Sellman Games main charts",
+
+        sort_top:"Top sorting enabled",
+        sort_new:"New sorting enabled",
+      },
+      ru: {
+        nav_games: "Games", nav_top:"Top", nav_new:"New", nav_categories:"Categories",
+        search_placeholder:"Поиск игр...",
+        featured:"FEATURED",
+        badge_fast:"Fast", badge_trending:"Trending", badge_skill:"Skill", badge_update:"Weekly Update",
+        hero_desc:"Уклоняйся от препятствий, которые меняются каждый раз. Проверь реакцию в главном хите Sellman Games!",
+        play_now:"Играть", view_details:"Подробнее",
+        cat_all:"All", cat_action:"Action", cat_puzzle:"Puzzle", cat_horror:"Horror", cat_multiplayer:"Multiplayer", cat_idle:"Idle",
+        top_players:"Топ игроков (неделя)",
+        rights:"Все права защищены.",
+        about:"О нас", contact:"Контакт", privacy:"Приватность", terms:"Условия",
+        account:"Аккаунт", edit_profile:"Редактировать профиль", upload_game:"Загрузить игру", logout:"Выйти",
+        game_title:"Название", description:"Описание", category:"Категория", category_hint:"Если пусто — будет All.",
+        thumb_image:"Фон / Превью",
+        drag_image:"Перетащи изображение сюда",
+        image_hint:"Или нажми Choose. Рекомендация: 1200x600.",
+        game_file:"Файл игры (один .html)",
+        drag_game:"Перетащи game.html сюда",
+        game_hint:"Загрузи один .html (index.html). Для многих файлов нужен ZIP.",
+        admin_only:"Загрузка доступна только Админу.",
+        cancel:"Отмена", upload:"Загрузить",
+        profile_info:"Каждый может менять свой ник и баннер.",
+        nickname:"Никнейм",
+        profile_banner:"Баннер профиля",
+        drag_banner:"Перетащи баннер сюда",
+        banner_hint:"JPG/PNG/WebP. Рекомендация: 1600x400.",
+        save:"Сохранить",
+        done:"Готово",
+        language:"Язык",
+
+        msg_login_needed:"Сначала войдите через Google.",
+        msg_admin_only:"Только Админ может загружать игры.",
+        msg_saved:"✅ Сохранено!",
+        msg_upload_ok:"✅ Загружено!",
+        msg_error:"Ошибка. Попробуйте снова.",
+        status_ready:"Готово.",
+        status_uploading_image:"Загрузка изображения...",
+        status_uploading_game:"Загрузка игры...",
+        status_saving:"Сохранение...",
+        status_uploading_banner:"Загрузка баннера...",
+        status_writing_profile:"Запись профиля...",
+
+        val_title_required:"Введите название.",
+        val_desc_required:"Введите описание.",
+        val_pick_image:"Выберите изображение.",
+        val_pick_game:"Выберите HTML файл игры.",
+        val_image_only:"Только изображения.",
+        val_html_only:"Только HTML (.html).",
+
+        no_games_title:"Игр пока нет",
+        no_games_hint:"Войдите как Админ и загрузите первую игру.",
+
+        in_charts:"В главных чартах Sellman Games",
+
+        sort_top:"Сортировка Top включена",
+        sort_new:"Сортировка New включена",
+      }
+    };
+
+    const LANG_KEY = "sg_lang_v1";
+    let lang = localStorage.getItem(LANG_KEY) || "ka";
+    function t(key){ return I18N[lang]?.[key] ?? I18N.ka[key] ?? key; }
+
+    function applyI18n(){
+      $all("[data-i18n]").forEach(el => {
+        const k = el.getAttribute("data-i18n");
+        el.textContent = t(k);
+      });
+      $all("[data-i18n-ph]").forEach(el => {
+        const k = el.getAttribute("data-i18n-ph");
+        el.setAttribute("placeholder", t(k));
+      });
+    }
+
+    // ------------------ Mobile UI ------------------
+    const drawer = $("#drawer");
+    const hamburgerBtn = $("#hamburgerBtn");
+    const mobileSearchBtn = $("#mobileSearchBtn");
+    const mobileSearchPanel = $("#mobileSearchPanel");
+
+    hamburgerBtn?.addEventListener("click", () => {
+      drawer.classList.toggle("open");
+      mobileSearchPanel.classList.remove("open");
+    });
+
+    mobileSearchBtn?.addEventListener("click", () => {
+      mobileSearchPanel.classList.toggle("open");
+      drawer.classList.remove("open");
+      if (mobileSearchPanel.classList.contains("open")) $("#mobileSearchInput")?.focus();
+    });
+
+    // Click outside closes drawer/search/dropdown
+    document.addEventListener("click", (e) => {
+      const tEl = e.target;
+
+      if (drawer.classList.contains("open")) {
+        const clickedHamburger = hamburgerBtn.contains(tEl);
+        const clickedInsideDrawer = drawer.contains(tEl);
+        if (!clickedHamburger && !clickedInsideDrawer) drawer.classList.remove("open");
+      }
+
+      if (mobileSearchPanel.classList.contains("open")) {
+        const clickedSearchBtn = mobileSearchBtn.contains(tEl);
+        const clickedInsideSearch = mobileSearchPanel.contains(tEl);
+        if (!clickedSearchBtn && !clickedInsideSearch) mobileSearchPanel.classList.remove("open");
+      }
+
+      const dd = $("#profileDropdown");
+      const pill = $("#profilePill");
+      if (dd && dd.classList.contains("open")) {
+        const clickedPill = pill && pill.contains(tEl);
+        const clickedInsideDD = dd.contains(tEl);
+        if (!clickedPill && !clickedInsideDD) dd.classList.remove("open");
+      }
+    });
+
+    // ------------------ Search + Filter ------------------
+    const searchInput = $("#searchInput");
+    const mobileSearchInput = $("#mobileSearchInput");
+    const categories = $("#categories");
+    let activeCat = "All";
+
+    function getGameCards() { return $all(".game-card"); }
+
+    function applyFilters() {
+      const q = (searchInput?.value || mobileSearchInput?.value || "").trim().toLowerCase();
+      getGameCards().forEach(card => {
+        const title = (card.dataset.title || "").toLowerCase();
+        const cat = card.dataset.cat || "All";
+        const matchesCat = (activeCat === "All") || (cat === activeCat);
+        const matchesQ = !q || title.includes(q);
+        card.style.display = (matchesCat && matchesQ) ? "" : "none";
+      });
+    }
+
+    [searchInput, mobileSearchInput].forEach(inp => {
+      inp?.addEventListener("input", () => {
+        if (inp === searchInput && mobileSearchInput) mobileSearchInput.value = searchInput.value;
+        if (inp === mobileSearchInput && searchInput) searchInput.value = mobileSearchInput.value;
+        applyFilters();
+      });
+    });
+
+    categories?.addEventListener("click", (e) => {
+      const a = e.target.closest(".cat-pill");
+      if (!a) return;
+      e.preventDefault();
+      $all(".cat-pill").forEach(x => x.classList.remove("active"));
+      a.classList.add("active");
+      activeCat = a.dataset.cat || "All";
+      applyFilters();
+    });
+
+    // ------------------ Likes (LocalStorage) ------------------
+    const LIKE_KEY = "sg_likes_v1";
+    function readLikes() { try { return JSON.parse(localStorage.getItem(LIKE_KEY) || "{}"); } catch { return {}; } }
+    function writeLikes(obj) { localStorage.setItem(LIKE_KEY, JSON.stringify(obj)); }
+    function parseCount(s) {
+      const tt = (s || "").toLowerCase().replace(/,/g, "").trim();
+      if (tt.endsWith("k")) return Math.round(parseFloat(tt) * 1000);
+      if (tt.endsWith("m")) return Math.round(parseFloat(tt) * 1000000);
+      const n = parseInt(tt, 10);
+      return Number.isFinite(n) ? n : 0;
+    }
+    function formatCount(n) {
+      if (n >= 1000000) return (Math.round(n / 100000) / 10) + "m";
+      if (n >= 1000) return (Math.round(n / 100) / 10) + "k";
+      return String(n);
+    }
+
+    function initLikesUI() {
+      const likes = readLikes();
+      $all(".like-btn").forEach(btn => {
+        const id = btn.dataset.like;
+        if (!id) return;
+
+        const countEl = btn.querySelector(".likes-count");
+        const baseText = countEl?.textContent?.trim() || "0";
+        const base = parseCount(baseText);
+
+        const userLiked = !!likes[id];
+        btn.classList.toggle("liked", userLiked);
+        if (countEl) countEl.textContent = formatCount(base + (userLiked ? 1 : 0));
+
+        btn.addEventListener("click", (e) => {
+          e.preventDefault(); e.stopPropagation();
+          const current = readLikes();
+          const isLikedNow = !current[id];
+          current[id] = isLikedNow;
+          writeLikes(current);
+          btn.classList.toggle("liked", isLikedNow);
+          if (countEl) countEl.textContent = formatCount(base + (isLikedNow ? 1 : 0));
+        }, { passive:false });
+      });
+    }
+
+    // ------------------ Auth ------------------
+    const authContainer = $("#authContainer");
+    const loginBtn = $("#loginBtn");
+    const profileDropdown = $("#profileDropdown");
+    const dropEmail = $("#dropEmail");
+    const menuUpload = $("#menuUpload");
+    const menuLogout = $("#menuLogout");
+    const menuProfileEdit = $("#menuProfileEdit");
+
+    function isAdmin(user) {
+      return !!user?.email && user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+    }
+
+    async function login() {
+      try {
+        await signInWithPopup(auth, provider);
+      } catch (e) {
+        alert("Login error: " + (e?.message || e));
+      }
+    }
+
+    loginBtn.addEventListener("click", login);
+
+    menuLogout.addEventListener("click", async () => {
+      await signOut(auth);
+      profileDropdown.classList.remove("open");
+    });
+
+    function renderAuthPill(user, profile) {
+      const name = esc(profile?.nickname || user.displayName || "User");
+      const email = esc(user.email || "-");
+      const pic = esc(user.photoURL || "");
+      authContainer.innerHTML = `
+        <div class="profile-pill" id="profilePill" title="Open menu">
+          <img src="${pic}" alt="avatar">
+          <span class="name">${name}</span>
+          <i class="fas fa-chevron-down" style="color: var(--text-gray);"></i>
+        </div>
+      `;
+      dropEmail.textContent = email;
+      menuUpload.style.display = isAdmin(user) ? "flex" : "none";
+
+      const pill = $("#profilePill");
+      pill?.addEventListener("click", () => profileDropdown.classList.toggle("open"));
+
+      // drop-down has data-i18n spans already in HTML, so nothing special needed,
+      // but after any rerender we still keep global i18n consistent:
+      applyI18n();
+    }
+
+    function renderLoggedOut() {
+      authContainer.innerHTML = `
+        <button class="icon-btn" id="loginBtn" title="Sign in with Google">
+          <i class="fa-brands fa-google"></i>
+        </button>
+      `;
+      $("#loginBtn").addEventListener("click", login);
+      dropEmail.textContent = "-";
+      menuUpload.style.display = "none";
+      profileDropdown.classList.remove("open");
+      applyI18n();
+    }
+
+    // ------------------ Upload modal ------------------
+    const overlayUpload = $("#overlayUpload");
+    const closeUpload = $("#closeUpload");
+    const cancelUpload = $("#cancelUpload");
+    const submitUpload = $("#submitUpload");
+    const statusUpload = $("#statusUpload");
+    const barUpload = $("#barUpload");
+
+    const gameTitle = $("#gameTitle");
+    const gameDesc = $("#gameDesc");
+    const gameCat = $("#gameCat");
+
+    const imgDrop = $("#imgDrop");
+    const imgPick = $("#imgPick");
+    const imgChoose = $("#imgChoose");
+    const imgClear = $("#imgClear");
+    const imgLine = $("#imgLine");
+    const imgName = $("#imgName");
+    const imgSize = $("#imgSize");
+
+    const gameDrop = $("#gameDrop");
+    const gamePick = $("#gamePick");
+    const gameChoose = $("#gameChoose");
+    const gameClear = $("#gameClear");
+    const gameLine = $("#gameLine");
+    const gameName = $("#gameName");
+    const gameSize = $("#gameSize");
+
+    let pickedImage = null;
+    let pickedGame = null;
+
+    function openUploadModal(){
+      overlayUpload.classList.add("open");
+      resetUploadProgress(t("status_ready"));
+    }
+    function closeUploadModal(){
+      overlayUpload.classList.remove("open");
+      resetUploadProgress(t("status_ready"));
+      clearImage();
+      clearGame();
+    }
+    function resetUploadProgress(msg){
+      barUpload.style.width = "0%";
+      statusUpload.textContent = msg;
+    }
+
+    menuUpload.addEventListener("click", (e) => {
+      e.preventDefault();
+      profileDropdown.classList.remove("open");
+      const user = auth.currentUser;
+      if (!user) return alert(t("msg_login_needed"));
+      if (!isAdmin(user)) return alert(t("msg_admin_only"));
+      openUploadModal();
+    });
+
+    closeUpload.addEventListener("click", closeUploadModal);
+    cancelUpload.addEventListener("click", closeUploadModal);
+    overlayUpload.addEventListener("click", (e) => { if (e.target === overlayUpload) closeUploadModal(); });
+
+    // Image handlers
+    imgChoose.addEventListener("click", () => imgPick.click());
+    imgPick.addEventListener("change", () => { const f = imgPick.files?.[0]; if (f) setImageFile(f); });
+    imgClear.addEventListener("click", clearImage);
+
+    imgDrop.addEventListener("dragover", (e) => { e.preventDefault(); imgDrop.style.borderColor = "rgba(0,242,254,0.75)"; });
+    imgDrop.addEventListener("dragleave", () => { imgDrop.style.borderColor = "rgba(0,242,254,0.35)"; });
+    imgDrop.addEventListener("drop", (e) => {
+      e.preventDefault();
+      imgDrop.style.borderColor = "rgba(0,242,254,0.35)";
+      const f = e.dataTransfer.files?.[0];
+      if (f) setImageFile(f);
+    });
+
+    function setImageFile(file){
+      if (!file.type.startsWith("image/")) return alert(t("val_image_only"));
+      pickedImage = file;
+      imgLine.style.display = "flex";
+      imgName.textContent = file.name;
+      imgSize.textContent = prettySize(file.size);
+      imgClear.disabled = false;
+    }
+    function clearImage(){
+      pickedImage = null;
+      imgPick.value = "";
+      imgLine.style.display = "none";
+      imgName.textContent = "-";
+      imgSize.textContent = "-";
+      imgClear.disabled = true;
+    }
+
+    // Game handlers
+    gameChoose.addEventListener("click", () => gamePick.click());
+    gamePick.addEventListener("change", () => { const f = gamePick.files?.[0]; if (f) setGameFile(f); });
+    gameClear.addEventListener("click", clearGame);
+
+    gameDrop.addEventListener("dragover", (e) => { e.preventDefault(); gameDrop.style.borderColor = "rgba(0,242,254,0.75)"; });
+    gameDrop.addEventListener("dragleave", () => { gameDrop.style.borderColor = "rgba(0,242,254,0.35)"; });
+    gameDrop.addEventListener("drop", (e) => {
+      e.preventDefault();
+      gameDrop.style.borderColor = "rgba(0,242,254,0.35)";
+      const f = e.dataTransfer.files?.[0];
+      if (f) setGameFile(f);
+    });
+
+    function setGameFile(file){
+      const isHtml = file.name.toLowerCase().endsWith(".html") || file.type === "text/html";
+      if (!isHtml) return alert(t("val_html_only"));
+      pickedGame = file;
+      gameLine.style.display = "flex";
+      gameName.textContent = file.name;
+      gameSize.textContent = prettySize(file.size);
+      gameClear.disabled = false;
+    }
+    function clearGame(){
+      pickedGame = null;
+      gamePick.value = "";
+      gameLine.style.display = "none";
+      gameName.textContent = "-";
+      gameSize.textContent = "-";
+      gameClear.disabled = true;
+    }
+
+    function prettySize(bytes){
+      const kb = bytes / 1024;
+      if (kb < 1024) return kb.toFixed(1) + " KB";
+      const mb = kb / 1024;
+      if (mb < 1024) return mb.toFixed(2) + " MB";
+      const gb = mb / 1024;
+      return gb.toFixed(2) + " GB";
+    }
+
+    async function uploadWithProgress(storageRef, file, onProg){
+      return new Promise((resolve, reject) => {
+        const task = uploadBytesResumable(storageRef, file);
+        task.on("state_changed",
+          (snap) => {
+            const p = snap.totalBytes ? (snap.bytesTransferred / snap.totalBytes) : 0;
+            onProg?.(p);
+          },
+          reject,
+          async () => resolve(await getDownloadURL(task.snapshot.ref))
+        );
+      });
+    }
+
+    function makeSlug(str){
+      return str.toLowerCase().trim()
+        .replace(/[^\p{L}\p{N}]+/gu, "-")
+        .replace(/^-+|-+$/g, "")
+        .slice(0, 50) || "game";
+    }
+
+    submitUpload.addEventListener("click", async () => {
+      const user = auth.currentUser;
+      if (!user) return alert(t("msg_login_needed"));
+      if (!isAdmin(user)) return alert(t("msg_admin_only"));
+
+      const title = gameTitle.value.trim();
+      const desc = gameDesc.value.trim();
+      const cat = (gameCat.value.trim() || "All").replace(/\s+/g,"").slice(0,20);
+
+      if (!title) return alert(t("val_title_required"));
+      if (!desc) return alert(t("val_desc_required"));
+      if (!pickedImage) return alert(t("val_pick_image"));
+      if (!pickedGame) return alert(t("val_pick_game"));
+
+      try {
+        submitUpload.disabled = true;
+
+        const slug = makeSlug(title) + "-" + Date.now();
+
+        resetUploadProgress(t("status_uploading_image"));
+        const imgRef = ref(storage, `games/${slug}/thumb_${pickedImage.name}`);
+        const imgUrl = await uploadWithProgress(imgRef, pickedImage, (p) => {
+          barUpload.style.width = Math.round(p * 45) + "%";
+          statusUpload.textContent = `${t("status_uploading_image")} ${Math.round(p * 100)}%`;
+        });
+
+        resetUploadProgress(t("status_uploading_game"));
+        const gameRef = ref(storage, `games/${slug}/game_${pickedGame.name}`);
+        const gameUrl = await uploadWithProgress(gameRef, pickedGame, (p) => {
+          barUpload.style.width = (45 + Math.round(p * 45)) + "%";
+          statusUpload.textContent = `${t("status_uploading_game")} ${Math.round(p * 100)}%`;
+        });
+
+        barUpload.style.width = "95%";
+        statusUpload.textContent = t("status_saving");
+
+        await addDoc(collection(db, "games"), {
+          slug, title, desc, cat,
+          imgUrl, gameUrl,
+          createdAt: serverTimestamp(),
+          createdBy: user.email || null,
+          likesBase: 0,
+          viewsBase: 0
+        });
+
+        barUpload.style.width = "100%";
+        statusUpload.textContent = t("msg_upload_ok");
+
+        gameTitle.value = "";
+        gameDesc.value = "";
+        gameCat.value = "";
+        clearImage();
+        clearGame();
+
+        setTimeout(() => closeUploadModal(), 600);
+      } catch (e) {
+        console.error(e);
+        alert("Upload error: " + (e?.message || e));
+        resetUploadProgress(t("msg_error"));
+      } finally {
+        submitUpload.disabled = false;
+      }
+    });
+
+    // ------------------ Profile modal ------------------
+    const overlayProfile = $("#overlayProfile");
+    const closeProfile = $("#closeProfile");
+    const closeProfile2 = $("#closeProfile2");
+    const saveProfileBtn = $("#saveProfileBtn");
+    const statusProfile = $("#statusProfile");
+    const barProfile = $("#barProfile");
+
+    const profileBannerPreview = $("#profileBannerPreview");
+    const profileAvatarPreview = $("#profileAvatarPreview");
+    const profileNickPreview = $("#profileNickPreview");
+    const profileEmailPreview = $("#profileEmailPreview");
+
+    const nickInput = $("#nickInput");
+    const bannerDrop = $("#bannerDrop");
+    const bannerPick = $("#bannerPick");
+    const bannerChoose = $("#bannerChoose");
+    const bannerClear = $("#bannerClear");
+    const bannerLine = $("#bannerLine");
+    const bannerName = $("#bannerName");
+    const bannerSize = $("#bannerSize");
+
+    let pickedBanner = null;
+    let cachedProfile = null; // {nickname,bannerUrl}
+
+    function openProfileModal(){
+      const user = auth.currentUser;
+      if (!user) return alert(t("msg_login_needed"));
+      overlayProfile.classList.add("open");
+      statusProfile.textContent = t("status_ready");
+      barProfile.style.width = "0%";
+    }
+    function closeProfileModal(){
+      overlayProfile.classList.remove("open");
+      pickedBanner = null;
+      bannerPick.value = "";
+      bannerLine.style.display = "none";
+      bannerClear.disabled = true;
+      statusProfile.textContent = t("status_ready");
+      barProfile.style.width = "0%";
+    }
+
+    menuProfileEdit.addEventListener("click", async (e) => {
+      e.preventDefault();
+      profileDropdown.classList.remove("open");
+      await loadMyProfile(); // refresh
+      openProfileModal();
+    });
+
+    closeProfile.addEventListener("click", closeProfileModal);
+    closeProfile2.addEventListener("click", closeProfileModal);
+    overlayProfile.addEventListener("click", (e) => { if (e.target === overlayProfile) closeProfileModal(); });
+
+    bannerChoose.addEventListener("click", () => bannerPick.click());
+    bannerPick.addEventListener("change", () => {
+      const f = bannerPick.files?.[0];
+      if (f) setBannerFile(f);
+    });
+    bannerClear.addEventListener("click", clearBanner);
+
+    bannerDrop.addEventListener("dragover", (e) => { e.preventDefault(); bannerDrop.style.borderColor = "rgba(0,242,254,0.75)"; });
+    bannerDrop.addEventListener("dragleave", () => { bannerDrop.style.borderColor = "rgba(0,242,254,0.35)"; });
+    bannerDrop.addEventListener("drop", (e) => {
+      e.preventDefault();
+      bannerDrop.style.borderColor = "rgba(0,242,254,0.35)";
+      const f = e.dataTransfer.files?.[0];
+      if (f) setBannerFile(f);
+    });
+
+    function setBannerFile(file){
+      if (!file.type.startsWith("image/")) return alert(t("val_image_only"));
+      pickedBanner = file;
+      bannerLine.style.display = "flex";
+      bannerName.textContent = file.name;
+      bannerSize.textContent = prettySize(file.size);
+      bannerClear.disabled = false;
+
+      // local preview
+      const url = URL.createObjectURL(file);
+      profileBannerPreview.style.backgroundImage = `url('${url}')`;
+    }
+    function clearBanner(){
+      pickedBanner = null;
+      bannerPick.value = "";
+      bannerLine.style.display = "none";
+      bannerName.textContent = "-";
+      bannerSize.textContent = "-";
+      bannerClear.disabled = true;
+
+      // restore cached
+      const u = cachedProfile?.bannerUrl;
+      profileBannerPreview.style.backgroundImage = u ? `url('${u}')` : "";
+    }
+
+    async function loadMyProfile(){
+      const user = auth.currentUser;
+      if (!user) return;
+
+      const refDoc = doc(db, "users", user.uid);
+      const snap = await getDoc(refDoc);
+      const data = snap.exists() ? snap.data() : {};
+
+      cachedProfile = {
+        nickname: data.nickname || user.displayName || "User",
+        bannerUrl: data.bannerUrl || ""
+      };
+
+      nickInput.value = cachedProfile.nickname;
+      profileNickPreview.textContent = cachedProfile.nickname;
+      profileEmailPreview.textContent = user.email || "-";
+      profileAvatarPreview.src = user.photoURL || "";
+      profileBannerPreview.style.backgroundImage = cachedProfile.bannerUrl ? `url('${cachedProfile.bannerUrl}')` : "";
+    }
+
+    saveProfileBtn.addEventListener("click", async () => {
+      const user = auth.currentUser;
+      if (!user) return alert(t("msg_login_needed"));
+
+      const nickname = nickInput.value.trim().slice(0,24) || (user.displayName || "User");
+      let bannerUrl = cachedProfile?.bannerUrl || "";
+
+      try {
+        saveProfileBtn.disabled = true;
+        statusProfile.textContent = t("status_saving");
+        barProfile.style.width = "10%";
+
+        if (pickedBanner) {
+          statusProfile.textContent = t("status_uploading_banner");
+          const ext = (pickedBanner.name.split(".").pop() || "jpg").toLowerCase();
+          const bRef = ref(storage, `users/${user.uid}/banner.${ext}`);
+          bannerUrl = await uploadWithProgress(bRef, pickedBanner, (p) => {
+            barProfile.style.width = (10 + Math.round(p * 70)) + "%";
+            statusProfile.textContent = `${t("status_uploading_banner")} ${Math.round(p * 100)}%`;
+          });
+        }
+
+        statusProfile.textContent = t("status_writing_profile");
+        barProfile.style.width = "90%";
+
+        await setDoc(doc(db, "users", user.uid), {
+          nickname,
+          bannerUrl,
+          updatedAt: serverTimestamp(),
+          email: user.email || null
+        }, { merge: true });
+
+        barProfile.style.width = "100%";
+        statusProfile.textContent = t("msg_saved");
+
+        cachedProfile = { nickname, bannerUrl };
+        profileNickPreview.textContent = nickname;
+        profileBannerPreview.style.backgroundImage = bannerUrl ? `url('${bannerUrl}')` : "";
+
+        // update header pill immediately
+        renderAuthPill(user, cachedProfile);
+
+        // reset picked banner state
+        pickedBanner = null;
+        bannerPick.value = "";
+        bannerLine.style.display = "none";
+        bannerClear.disabled = true;
+
+      } catch (e) {
+        console.error(e);
+        statusProfile.textContent = t("msg_error");
+        alert("Profile save error: " + (e?.message || e));
+      } finally {
+        saveProfileBtn.disabled = false;
+      }
+    });
+
+    // ------------------ Games render (Firestore) ------------------
+    const gameGrid = $("#gameGrid");
+    let allGames = [];
+    let sortMode = "new"; // 'new' | 'top'
+
+    function scoreTop(g){
+      const likes = Number(g.likesBase || 0);
+      const views = Number(g.viewsBase || 0);
+      return likes * 5 + views;
+    }
+
+    function renderEmpty(){
+      gameGrid.innerHTML = `
+        <div class="drop" style="grid-column:1/-1;">
+          <strong><i class="fas fa-inbox"></i> ${esc(t("no_games_title"))}</strong>
+          <div class="hint">${esc(t("no_games_hint"))}</div>
+        </div>
+      `;
+    }
+
+    function renderGames(list){
+      if (!list.length){
+        renderEmpty();
+        return;
+      }
+
+      // IMPORTANT FIX:
+      // game-desc აღარ იღებს Firestore desc-ს (შენ თქვი არ მინდა),
+      // მხოლოდ 1 ფრაზაა ჩარტებზე.
+      const descFixed = t("in_charts");
+
+      gameGrid.innerHTML = list.map(g => {
+        const title = esc(g.title || "Untitled");
+        const cat = esc(g.cat || "All");
+        const id = esc(g.slug || g.id || "");
+        const img = esc(g.imgUrl || "");
+        const gameUrl = esc(g.gameUrl || "#");
+        const views = Number(g.viewsBase || 0);
+        const likes = Number(g.likesBase || 0);
+
+        return `
+          <a href="${gameUrl}" class="game-card" data-title="${title}" data-cat="${cat}" data-game-id="${id}" target="_blank" rel="noopener">
+            <div class="game-thumb" style="background-image:url('${img}');">
+              <span class="tag">${cat === "All" ? "PLAY" : cat.toUpperCase()}</span>
+              <div class="play-overlay"><i class="fas fa-play-circle"></i></div>
+            </div>
+            <div class="game-info">
+              <h3>${title}</h3>
+              <div class="game-stats">
+                <div class="left-stats">
+                  <span class="stat"><i class="fas fa-eye"></i> <span class="views">${formatCount(views)}</span></span>
+                </div>
+                <span class="like-btn" data-like="${id}">
+                  <i class="fas fa-heart"></i> <span class="likes-count">${formatCount(likes)}</span>
+                </span>
+              </div>
+              <div class="game-desc">${esc(descFixed)}</div>
+            </div>
+          </a>
+        `;
+      }).join("");
+
+      initLikesUI();
+      applyFilters();
+      updateFeaturedFromFirst();
+    }
+
+    function updateFeaturedFromFirst(){
+      const first = allGames[0];
+      if (!first) return;
+      $("#featuredTitle").textContent = first.title || "Sellman";
+    }
+
+    function applySortAndRender(){
+      const copy = [...allGames];
+      if (sortMode === "top") {
+        copy.sort((a,b) => scoreTop(b) - scoreTop(a));
+      } else {
+        copy.sort((a,b) => {
+          const ta = a.createdAt?.seconds || 0;
+          const tb = b.createdAt?.seconds || 0;
+          return tb - ta;
+        });
+      }
+      renderGames(copy);
+    }
+
+    // Listen Firestore
+    const gamesQ = query(collection(db, "games"), orderBy("createdAt", "desc"));
+    onSnapshot(gamesQ, (snap) => {
+      const list = [];
+      snap.forEach(docu => list.push({ id: docu.id, ...docu.data() }));
+      allGames = list;
+      applySortAndRender();
+    }, (err) => {
+      console.error(err);
+      gameGrid.innerHTML = `
+        <div class="drop" style="grid-column:1/-1; border-color: rgba(255,107,107,0.35);">
+          <strong style="color: var(--danger)"><i class="fas fa-triangle-exclamation"></i> Firestore error</strong>
+          <div class="hint">${esc(err?.message || err)}</div>
+        </div>
+      `;
+    });
+
+    // ------------------ Nav buttons behavior ------------------
+    const navGames = $("#navGames"), navTop = $("#navTop"), navNew = $("#navNew"), navCats = $("#navCats");
+    const mNavGames = $("#mNavGames"), mNavTop = $("#mNavTop"), mNavNew = $("#mNavNew"), mNavCats = $("#mNavCats");
+    const homeLink = $("#homeLink");
+
+    function setActiveNav(id){
+      $all(".nav-links a").forEach(a => a.classList.remove("active"));
+      if (id) $(id)?.classList.add("active");
+    }
+
+    function goTo(el){
+      el?.scrollIntoView({ behavior:"smooth", block:"start" });
+      drawer.classList.remove("open");
+    }
+
+    function handleGames(e){ e?.preventDefault(); sortMode="new"; applySortAndRender(); setActiveNav("#navGames"); goTo($("#gamesSection")); }
+    function handleCats(e){ e?.preventDefault(); setActiveNav("#navCats"); goTo($("#categories")); }
+    function handleTop(e){ e?.preventDefault(); sortMode="top"; applySortAndRender(); setActiveNav("#navTop"); goTo($("#gamesSection")); }
+    function handleNew(e){ e?.preventDefault(); sortMode="new"; applySortAndRender(); setActiveNav("#navNew"); goTo($("#gamesSection")); }
+    function handleHome(e){ e?.preventDefault(); setActiveNav(null); goTo($("#topSection")); }
+
+    navGames.addEventListener("click", handleGames);
+    navCats.addEventListener("click", handleCats);
+    navTop.addEventListener("click", handleTop);
+    navNew.addEventListener("click", handleNew);
+    homeLink.addEventListener("click", handleHome);
+
+    mNavGames.addEventListener("click", handleGames);
+    mNavCats.addEventListener("click", handleCats);
+    mNavTop.addEventListener("click", handleTop);
+    mNavNew.addEventListener("click", handleNew);
+
+    // Hero buttons
+    $("#playFeaturedBtn")?.addEventListener("click", () => {
+      const first = allGames[0];
+      if (first?.gameUrl) window.open(first.gameUrl, "_blank", "noopener");
+      else goTo($("#gamesSection"));
+    });
+    $("#detailsFeaturedBtn")?.addEventListener("click", () => {
+      goTo($("#gamesSection"));
+    });
+
+    // ------------------ Language picker ------------------
+    const overlayLang = $("#overlayLang");
+    const langBtn = $("#langBtn");
+    const closeLang = $("#closeLang");
+
+    function openLang(){ overlayLang.classList.add("open"); }
+    function closeLangModal(){ overlayLang.classList.remove("open"); }
+
+    langBtn.addEventListener("click", openLang);
+    closeLang.addEventListener("click", closeLangModal);
+    overlayLang.addEventListener("click", (e) => { if (e.target === overlayLang) closeLangModal(); });
+
+    $all("[data-lang]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        lang = btn.getAttribute("data-lang") || "ka";
+        localStorage.setItem(LANG_KEY, lang);
+        applyI18n();
+
+        // IMPORTANT: დინამიური თამაშების აღწერა (descFixed) ენის შეცვლაზე უნდა განახლდეს:
+        applySortAndRender();
+
+        closeLangModal();
+      });
+    });
+
+    // ------------------ Auth state + profile load ------------------
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        renderLoggedOut();
+        cachedProfile = null;
+        return;
+      }
+      await loadMyProfile();
+      renderAuthPill(user, cachedProfile);
+    });
+
+    // ------------------ Init ------------------
+    document.getElementById("year").textContent = new Date().getFullYear();
+    applyI18n();
+    // თუ Firestore ჯერ არ წამოსულა, მაინც გვქონდეს ლამაზი ტექსტი:
+    renderEmpty();
+  </script>
+
+  <!-- ================= SECURITY RULES (copy to Firebase) =================
+    Firestore Rules:
+    rules_version = '2';
+    service cloud.firestore {
+      match /databases/{database}/documents {
+
+        // Games: everyone reads, only Admin writes
+        match /games/{docId} {
+          allow read: if true;
+          allow write: if request.auth != null
+                      && request.auth.token.email == "lukazakradze9@gmail.com";
+        }
+
+        // Users: everyone can read (optional), each user can write their own profile
+        match /users/{uid} {
+          allow read: if true;
+          allow write: if request.auth != null && request.auth.uid == uid;
+        }
+      }
+    }
+
+    Storage Rules:
+    rules_version = '2';
+    service firebase.storage {
+      match /b/{bucket}/o {
+
+        // Game files: everyone read, only Admin write
+        match /games/{allPaths=**} {
+          allow read: if true;
+          allow write: if request.auth != null
+                      && request.auth.token.email == "lukazakradze9@gmail.com";
+        }
+
+        // User banners: everyone read (optional), each user writes own folder
+        match /users/{uid}/{allPaths=**} {
+          allow read: if true;
+          allow write: if request.auth != null && request.auth.uid == uid;
+        }
+      }
+    }
+  ======================================================================= -->
+</body>
+</html>
