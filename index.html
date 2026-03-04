@@ -656,13 +656,6 @@
     </div>
 
     <div class="mbody">
-      
-      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:12px">
-        <button class="btn1" id="googleBtn" style="flex:1"><i class="fa-brands fa-google"></i> <span data-i18n="google_signin">Continue with Google</span></button>
-      </div>
-
-      <div style="height:1px;background:rgba(255,255,255,.06); margin:10px 0 16px"></div>
-
       <div class="field">
         <label data-i18n="email">Email</label>
         <input id="email" type="email" placeholder="you@gmail.com"/>
@@ -871,7 +864,7 @@
   import {
     getAuth, onAuthStateChanged, signOut,
     createUserWithEmailAndPassword, signInWithEmailAndPassword,
-    sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup
+    sendPasswordResetEmail
   } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
   import {
@@ -887,7 +880,6 @@
   const auth = getAuth(app);
   const db = getFirestore(app);
   const storage = getStorage(app);
-  const provider = new GoogleAuthProvider();
 
   /* ================= HELPERS ================= */
   const $ = (s)=>document.querySelector(s);
@@ -938,7 +930,6 @@
       about:"About", contact:"Contact", privacy:"Privacy", terms:"Terms",
       account:"Account", edit_profile:"Edit profile", upload_game:"Upload Game", logout:"Logout",
       auth_title:"Login / Register",
-      google_signin:"Continue with Google",
       email:"Email", password:"Password",
       login:"Login", register:"Register", forgot:"Forgot password",
       msg_email_needed:"ჩაწერე Email.",
@@ -992,7 +983,6 @@
       about:"About", contact:"Contact", privacy:"Privacy", terms:"Terms",
       account:"Account", edit_profile:"Edit profile", upload_game:"Upload Game", logout:"Logout",
       auth_title:"Login / Register",
-      google_signin:"Continue with Google",
       email:"Email", password:"Password",
       login:"Login", register:"Register", forgot:"Forgot password",
       msg_email_needed:"Enter email.",
@@ -1046,7 +1036,6 @@
       about:"О нас", contact:"Контакт", privacy:"Приватность", terms:"Условия",
       account:"Аккаунт", edit_profile:"Редактировать профиль", upload_game:"Загрузить игру", logout:"Выйти",
       auth_title:"Вход / Регистрация",
-      google_signin:"Войти через Google",
       email:"Email", password:"Пароль",
       login:"Войти", register:"Зарегистрироваться", forgot:"Забыли пароль",
       msg_email_needed:"Введите email.",
@@ -1253,7 +1242,6 @@
   const authMsg=$("#authMsg");
   const openAuthBtn=$("#openAuthBtn");
   const authClose=$("#authClose");
-  const googleBtn=$("#googleBtn");
   const emailEl=$("#email");
   const passEl=$("#pass");
   const emailLogin=$("#emailLogin");
@@ -1263,20 +1251,6 @@
   openAuthBtn.addEventListener("click",()=>{ ovAuth.classList.add("open"); authMsg.textContent="—"; authMsg.style.color="var(--g)"; });
   authClose.addEventListener("click",()=>ovAuth.classList.remove("open"));
   ovAuth.addEventListener("click",(e)=>{ if(e.target===ovAuth) ovAuth.classList.remove("open"); });
-
-  googleBtn.addEventListener("click",async ()=>{
-    try{
-      authMsg.style.color="var(--ok)";
-      authMsg.textContent="მუშავდება...";
-      await signInWithPopup(auth, provider);
-      authMsg.textContent=t("msg_login_ok");
-      setTimeout(()=>ovAuth.classList.remove("open"),350);
-    }catch(e){
-      console.error("Google Auth Error:", e);
-      authMsg.style.color="var(--danger)";
-      authMsg.textContent=(e?.message||t("msg_err"));
-    }
-  });
 
   emailLogin.addEventListener("click",async ()=>{
     const em=emailEl.value.trim();
