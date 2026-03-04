@@ -673,7 +673,7 @@
 
       <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap">
         <button class="btn2" id="forgotBtn"><i class="fa-solid fa-key"></i> <span data-i18n="forgot">Forgot password</span></button>
-        <div class="tiny" id="authMsg">—</div>
+        <div class="tiny" id="authMsg" style="font-weight:bold;">—</div>
       </div>
     </div>
   </div>
@@ -858,23 +858,23 @@
     measurementId: "G-9TC0J2TWMQ"
   };
 
-  /* ================= FIREBASE IMPORTS ================= */
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+  /* ================= FIREBASE IMPORTS (FIXED VERSION 10.8.0) ================= */
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 
   import {
     getAuth, onAuthStateChanged, signOut,
     createUserWithEmailAndPassword, signInWithEmailAndPassword,
     sendPasswordResetEmail
-  } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+  } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
   import {
     getFirestore, collection, addDoc, setDoc, doc, getDoc,
     serverTimestamp, query, orderBy, onSnapshot
-  } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+  } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
   import {
     getStorage, ref, uploadBytesResumable, getDownloadURL
-  } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-storage.js";
+  } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
@@ -1248,40 +1248,87 @@
   const emailRegister=$("#emailRegister");
   const forgotBtn=$("#forgotBtn");
 
-  openAuthBtn.addEventListener("click",()=>{ ovAuth.classList.add("open"); authMsg.textContent="—"; });
+  openAuthBtn.addEventListener("click",()=>{ ovAuth.classList.add("open"); authMsg.textContent="—"; authMsg.style.color="var(--g)"; });
   authClose.addEventListener("click",()=>ovAuth.classList.remove("open"));
   ovAuth.addEventListener("click",(e)=>{ if(e.target===ovAuth) ovAuth.classList.remove("open"); });
 
   emailLogin.addEventListener("click",async ()=>{
+    const em=emailEl.value.trim();
+    const ps=passEl.value;
+
+    if(!em || !ps) {
+      authMsg.style.color="var(--danger)";
+      authMsg.textContent="შეავსეთ მეილი და პაროლი!";
+      return;
+    }
+
     try{
-      await signInWithEmailAndPassword(auth, emailEl.value.trim(), passEl.value);
+      authMsg.style.color="var(--ok)";
+      authMsg.textContent="მუშავდება...";
+      await signInWithEmailAndPassword(auth, em, ps);
       authMsg.textContent=t("msg_login_ok");
       setTimeout(()=>ovAuth.classList.remove("open"),350);
     }catch(e){
       console.error("Email Login Error:", e);
-      authMsg.textContent=(e?.message||t("msg_err"));
+      authMsg.style.color="var(--danger)";
+      if(e.code === 'auth/invalid-credential' || e.code === 'auth/user-not-found' || e.code === 'auth/wrong-password') {
+        authMsg.textContent="არასწორი მეილი ან პაროლი.";
+      } else {
+        authMsg.textContent=(e?.message||t("msg_err"));
+      }
     }
   });
 
   emailRegister.addEventListener("click",async ()=>{
+    const em=emailEl.value.trim();
+    const ps=passEl.value;
+
+    if(!em || !ps) {
+      authMsg.style.color="var(--danger)";
+      authMsg.textContent="შეავსეთ მეილი და პაროლი!";
+      return;
+    }
+    if(ps.length < 6) {
+      authMsg.style.color="var(--danger)";
+      authMsg.textContent="პაროლი უნდა იყოს მინიმუმ 6 სიმბოლო!";
+      return;
+    }
+
     try{
-      await createUserWithEmailAndPassword(auth, emailEl.value.trim(), passEl.value);
+      authMsg.style.color="var(--ok)";
+      authMsg.textContent="მუშავდება...";
+      await createUserWithEmailAndPassword(auth, em, ps);
       authMsg.textContent=t("msg_register_ok");
       setTimeout(()=>ovAuth.classList.remove("open"),350);
     }catch(e){
       console.error("Email Register Error:", e);
-      authMsg.textContent=(e?.message||t("msg_err"));
+      authMsg.style.color="var(--danger)";
+      if(e.code === 'auth/email-already-in-use') {
+        authMsg.textContent="ეს მეილი უკვე დარეგისტრირებულია.";
+      } else if (e.code === 'auth/invalid-email') {
+        authMsg.textContent="არასწორი მეილის ფორმატი.";
+      } else if (e.code === 'auth/operation-not-allowed') {
+        authMsg.textContent="Firebase-ში Email/Password არაა ჩართული!";
+      } else {
+        authMsg.textContent=(e?.message||t("msg_err"));
+      }
     }
   });
 
   forgotBtn.addEventListener("click",async ()=>{
     const em=emailEl.value.trim();
-    if(!em) return (authMsg.textContent=t("msg_email_needed"));
+    if(!em) {
+      authMsg.style.color="var(--danger)";
+      authMsg.textContent=t("msg_email_needed");
+      return;
+    }
     try{
+      authMsg.style.color="var(--ok)";
       await sendPasswordResetEmail(auth, em);
       authMsg.textContent=t("msg_reset_sent");
     }catch(e){
       console.error("Forgot Password Error:", e);
+      authMsg.style.color="var(--danger)";
       authMsg.textContent=(e?.message||t("msg_err"));
     }
   });
@@ -1310,12 +1357,12 @@
       </div>
     `;
     // rebind auth open
-    $("#openAuthBtn").addEventListener("click",()=>{ ovAuth.classList.add("open"); authMsg.textContent="—"; });
+    $("#openAuthBtn").addEventListener("click",()=>{ ovAuth.classList.add("open"); authMsg.textContent="—"; authMsg.style.color="var(--g)"; });
   }
 
   function renderLoggedIn(user, profile){
     const authBox=$("#authBox");
-    const name = esc(profile?.nickname || user.displayName || "User");
+    const name = esc(profile?.nickname || user.displayName || user.email.split('@')[0]);
     const pic = esc(user.photoURL || "https://www.gravatar.com/avatar/?d=mp");
     authBox.innerHTML = `
       <div class="pill" id="pill">
@@ -1431,7 +1478,7 @@
     const data=snap.exists()?snap.data():{};
 
     cachedProfile={
-      nickname:data.nickname || user.displayName || "User",
+      nickname:data.nickname || user.displayName || user.email.split('@')[0],
       bannerUrl:data.bannerUrl || ""
     };
 
@@ -1456,7 +1503,7 @@
     const user=auth.currentUser;
     if(!user) return alert(t("login_needed"));
 
-    const nickname=(nickIn.value.trim().slice(0,24) || user.displayName || "User");
+    const nickname=(nickIn.value.trim().slice(0,24) || user.displayName || user.email.split('@')[0]);
     let bannerUrl=cachedProfile?.bannerUrl || "";
 
     try{
