@@ -1723,7 +1723,7 @@
 
       return `
         
-<div class="card" onclick="openGame('${url}', '${title}')" style="cursor:pointer"
+<div class="card" onclick="openGame('${url}', '${title}', '${id}')" style="cursor:pointer"
            data-title="${title}" data-cat="${cat}">
           <div class="thumb" style="background-image:url('${img}')">
             <span class="tag">${cat === "All" ? "PLAY" : cat.toUpperCase()}</span>
@@ -1790,13 +1790,25 @@
   /* ================= INIT ================= */
   $("#yr").textContent = new Date().getFullYear();
   applyI18n();
-window.openGame = function(url, title) {
+window.openGame = function(url, title, id) {
+    // 1. ნახვების გაზრდა Firebase-ში (ეს არის ის, რაც გვაკლდა)
+    if (id) {
+        const gameRef = firebase.database().ref('games/' + id);
+        gameRef.child('viewsBase').transaction((current) => {
+            return (current || 0) + 1;
+        });
+    }
+
+    // 2. ვიზუალური ნაწილი (საიტის ელემენტების მართვა)
     document.getElementById('grid').style.display = 'none';
     document.getElementById('topSection').style.display = 'none';
     document.getElementById('cats').style.display = 'none';
+    
     const container = document.getElementById('gameContainer');
     container.style.display = 'flex';
     document.getElementById('gameFrame').src = url;
+    
+    // 3. ავდივართ გვერდის თავში
     window.scrollTo({top: 0, behavior: 'smooth'});
 };
 window.toggleFullScreen = function() {
@@ -1822,6 +1834,7 @@ document.getElementById('backBtn')?.addEventListener('click', () => {
 
 </body>
 </html>
+
 
 
 
