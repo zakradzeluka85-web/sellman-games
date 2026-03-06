@@ -1717,10 +1717,7 @@
       const url=esc(g.gameUrl||"#");
       const views=Number(g.viewsBase||0);
       const likes=Number(g.likesBase||0);
-
-      // ✅ card description fixed as you requested
-      const fixedDesc = esc(t("chart_desc"));
-
+      
       return `
         
 <div class="card" onclick="openGame('${url}', '${title}', '${id}')" style="cursor:pointer"
@@ -1834,6 +1831,7 @@ document.getElementById('backBtn')?.addEventListener('click', () => {
 
 </body>
 </html>
+
 
 
 
