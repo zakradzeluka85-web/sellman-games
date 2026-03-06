@@ -1789,25 +1789,28 @@
   $("#yr").textContent = new Date().getFullYear();
   applyI18n();
 window.openGame = function(url, title, id) {
-    // 1. ნახვების გაზრდა Firebase-ში (ეს არის ის, რაც გვაკლდა)
-    if (id) {
-        const gameRef = firebase.database().ref('games/' + id);
-        gameRef.child('viewsBase').transaction((current) => {
-            return (current || 0) + 1;
-        });
-    }
-
-    // 2. ვიზუალური ნაწილი (საიტის ელემენტების მართვა)
+    // 1. ჯერ ვხსნით თამაშს (რომ შეცდომამ ხელი არ შეგვიშალოს)
     document.getElementById('grid').style.display = 'none';
     document.getElementById('topSection').style.display = 'none';
     document.getElementById('cats').style.display = 'none';
     
     const container = document.getElementById('gameContainer');
-    container.style.display = 'flex';
-    document.getElementById('gameFrame').src = url;
+    const frame = document.getElementById('gameFrame');
     
-    // 3. ავდივართ გვერდის თავში
+    if (container && frame) {
+        container.style.display = 'flex';
+        frame.src = url;
+    }
     window.scrollTo({top: 0, behavior: 'smooth'});
+
+    // 2. მხოლოდ ახლა ვცდილობთ ნახვების მომატებას Firebase-ში
+    try {
+        if (typeof firebase !== 'undefined' && id) {
+            firebase.database().ref('games/' + id).child('viewsBase').transaction(c => (c || 0) + 1);
+        }
+    } catch (e) {
+        console.warn("Firebase update failed, but game is running:", e);
+    }
 };
 window.toggleFullScreen = function() {
     const elem = document.getElementById("gameFrame");
@@ -1832,6 +1835,7 @@ document.getElementById('backBtn')?.addEventListener('click', () => {
 
 </body>
 </html>
+
 
 
 
