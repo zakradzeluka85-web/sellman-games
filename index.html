@@ -1725,7 +1725,7 @@
       const url=esc(g.gameUrl||"#");
       const views=Number(g.viewsBase||0);
       const likes=Number(g.likesBase||0);
-      
+      const fixedDesc = esc(g.desc || "");
 <div class="card" onclick="openGame('${url}', '${title}', '${id}')" style="cursor:pointer"
            data-title="${title}" data-cat="${cat}">
           <div class="thumb" style="background-image:url('${img}')">
@@ -1840,6 +1840,7 @@ document.getElementById('backBtn')?.addEventListener('click', () => {
 
 </body>
 </html>
+
 
 
 
