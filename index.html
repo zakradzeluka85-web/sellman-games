@@ -1725,7 +1725,7 @@
       const url=esc(g.gameUrl||"#");
       const views=Number(g.viewsBase||0);
       const likes=Number(g.likesBase||0);
-      const fixedDesc = esc(g.desc || "");
+      const fixedDesc = esc(g.desc || ""); return `
 <div class="card" onclick="openGame('${url}', '${title}', '${id}')" style="cursor:pointer"
            data-title="${title}" data-cat="${cat}">
           <div class="thumb" style="background-image:url('${img}')">
@@ -1793,6 +1793,13 @@
   /* ================= INIT ================= */
   $("#yr").textContent = new Date().getFullYear();
   applyI18n();
+  // Firebase-ის გააქტიურება მხოლოდ მაშინ, როცა ყველაფერი მზადაა
+const firebaseConfig = {
+    databaseURL: "https://შენი-პროექტის-სახელი.firebaseio.com"
+};
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
 window.openGame = function(url, title, id) {
     // 1. ჯერ ვხსნით თამაშს (რომ შეცდომამ ხელი არ შეგვიშალოს)
     document.getElementById('grid').style.display = 'none';
@@ -1840,6 +1847,7 @@ document.getElementById('backBtn')?.addEventListener('click', () => {
 
 </body>
 </html>
+
 
 
 
